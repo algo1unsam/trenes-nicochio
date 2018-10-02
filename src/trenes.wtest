@@ -1,0 +1,91 @@
+import deposito.*
+import formaciones.*
+import vagones.*
+import locomotoras.*
+
+describe "test de trenes" {
+
+	var depositoUno = new Deposito()
+	var formacionUno = new Formacion()
+	var formacionDos = new Formacion()
+	var locomotoraUno = new Locomotora()
+	var locomotoraDos = new Locomotora()
+	var vagonUno = new Vagon(tipoDeVagon = carga)
+	var vagonDos = new Vagon(tipoDeVagon = pasajero)
+	var vagonTres = new Vagon(tipoDeVagon = pasajero)
+
+	test"La cantidad de vagones livianos es 3" {
+		formacionUno.agregarVagon(vagonUno)
+		formacionUno.agregarVagon(vagonDos)
+		formacionUno.agregarVagon(vagonTres)
+		vagonUno.tipoDeVagon(carga)
+		vagonDos.tipoDeVagon(carga)
+		carga.cargaMaxima(1000)
+		pasajero.ancho(2)
+		pasajero.largo(3)
+		assert.equals(3, formacionUno.cantidadVagonesLivianos())
+	}
+
+	test "Velocidad maxima de una formacion" {
+		formacionUno.agregarLocomotora(locomotoraUno)
+		locomotoraUno.velocidadMaxima(15)
+		assert.equals(15, formacionUno.velocidadMaxima())
+	}
+
+	test "una formacion es eficiente" {
+		formacionUno.agregarLocomotora(locomotoraUno)
+		locomotoraUno.peso(100)
+		locomotoraUno.capacidadMaximaDeArrastre(1000)
+		assert.that(formacionUno.esEficiente())
+	}
+
+	test "una formacion puede moverse" {
+		formacionDos.agregarLocomotora(locomotoraUno)
+		formacionDos.agregarLocomotora(locomotoraDos)
+		carga.cargaMaxima(100)
+		locomotoraUno.capacidadMaximaDeArrastre(1000)
+		carga.cargaMaxima(200)
+		locomotoraDos.capacidadMaximaDeArrastre(1000)
+		assert.that(formacionDos.puedeMoverse())
+	}
+
+	test "Le faltan 880 kg de arrastre" {
+		formacionDos.agregarLocomotora(locomotoraUno)
+		formacionDos.agregarLocomotora(locomotoraDos)
+		formacionDos.agregarVagon(vagonUno)
+		formacionDos.agregarVagon(vagonDos)
+		carga.cargaMaxima(200)
+		pasajero.ancho(2)
+		pasajero.largo(3)
+		locomotoraUno.capacidadMaximaDeArrastre(800)
+		locomotoraDos.capacidadMaximaDeArrastre(800)
+		assert.equals(880, formacionDos.cuantosKilosDeArrastreLeFalta())
+	}
+
+	test "El vagon mas pesado de la formacion es" {
+		carga.cargaMaxima(180)
+		pasajero.ancho(2)
+		pasajero.largo(5)
+		depositoUno.agregarFormacion(formacionUno)
+		depositoUno.agregarFormacion(formacionDos)
+		formacionUno.agregarVagon(vagonUno)
+		formacionUno.agregarVagon(vagonDos)
+		formacionDos.agregarVagon(vagonTres)
+		formacionDos.agregarVagon(vagonDos)
+		assert.equals([ vagonDos, vagonTres ], depositoUno.conjuntoDeVagonesPesados())
+	}
+
+	test"La formacion necesita un conductor experimentado" {
+		depositoUno.agregarFormacion(formacionUno)
+		formacionUno.agregarVagon(vagonUno)
+		formacionUno.agregarVagon(vagonDos)
+		formacionUno.agregarLocomotora(locomotoraUno)
+		formacionUno.agregarLocomotora(locomotoraDos)
+		pasajero.ancho(3)
+		pasajero.largo(9)
+		carga.cargaMaxima(3200)
+		assert.that(depositoUno.necesitoConductorExperimentado())
+	}
+
+}
+
