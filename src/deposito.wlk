@@ -4,30 +4,30 @@ import locomotoras.*
 
 class Deposito {
 
-	var formaciones = []
+	var property formaciones = []
+	var property locomotorasSueltas = []
 
-	method agregarFormacion(unaFormacion) {
-		formaciones.add(unaFormacion)
+	method agregarVagones(unVagon) {
+		formaciones.add(unVagon)
 	}
 
-	method conjuntoDeVagonesPesados() {
-		return formaciones.map{ unVagon => unVagon.vagonMasPesadoDeUnaFormacion() }
+	method vagonMasPesado() {
+		return formaciones.map{ formacion => formacion.pesoMaximo() }
 	}
 
-	method necesitoConductorExperimentado() {
-		return formaciones.any{ unaFormacion => unaFormacion.esCompleja() }
+	method necesitaConductorExperimentado() {
+		return formaciones.any{ formacion => formacion.esCompleta() }
 	}
 
-	method agregarLocomotoraSiNoPuedeMoverse(unaFormacion, unaLocomotora) {
-		if (unaFormacion.puedeMoverse()) {
-		} else if (self.locomotoraAptaParaSerAgregada(unaLocomotora, unaFormacion)) {
-			unaFormacion.agregarLocomotora(unaLocomotora)
+	method agregarLocomotoraAFormacionDeterminada(formacion) {
+		if (!formacion.puedeMoverse()) {
+			formacion.add(self.buscarLocomotoraSueltaApta(formacion))
 		}
 	}
 
-	method locomotoraAptaParaSerAgregada(unaLocomotora, unaFormacion) {
-		return unaLocomotora.arrastreUtil() >= unaFormacion.cuantosKilosDeArrastreLeFalta()
+	method buscarLocomotoraSueltaApta(formacion) {
+		return locomotorasSueltas.find{ locomotora => locomotora.arrastreUtil() >= formacion.empuje() }
 	}
-	
 
 }
+

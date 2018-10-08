@@ -1,5 +1,5 @@
-import deposito.*
 import formaciones.*
+import deposito.*
 import vagones.*
 import locomotoras.*
 
@@ -85,6 +85,14 @@ describe "test de trenes" {
 		pasajero.largo(9)
 		carga.cargaMaxima(3200)
 		assert.that(depositoUno.necesitoConductorExperimentado())
+	}
+
+	test "testX" {
+		var buenosAires = new Ciudad(esGrande = true)
+		var chacabuco = new Ciudad()
+		var tandil = new Ciudad(esGrande = false)
+		var tren = new FormacionLargaDistancia(locomotoras = [], vagones = [], origen = buenosAires, destino = chacabuco)
+		tren.velocidadMaxima()
 	}
 
 }

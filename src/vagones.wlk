@@ -1,36 +1,39 @@
-class Vagon {
+class VagonDePasajero {
 
-	var property tipoDeVagon = pasajero
-
-	method pesoMaximo() {
-		return tipoDeVagon.pesoMaximo()
-	}
-
-}
-
-object pasajero {
-
-	var property ancho = 0
-	var property largo = 0
+	var property largoUtil
+	var property anchoUtil
 
 	method cantidadDePasajeros() {
-		if (ancho <= 2.5) {
-			return largo * 8
-		} else return largo * 10
+		if (anchoUtil <= 2.5) {
+			return largoUtil * 8
+		} else {
+			return largoUtil * 10
+		}
 	}
 
 	method pesoMaximo() {
 		return self.cantidadDePasajeros() * 80
 	}
 
-}
-
-object carga {
-
-	var property cargaMaxima = 100
-
-	method pesoMaximo() {
-		return cargaMaxima + 160
+	method cantidadDeBanios() {
+		if (self.cantidadDePasajeros() < 50) return 1 else return self.cantidadDePasajeros() / 50
 	}
 
 }
+
+class VagonDeCarga {
+
+	var property cargaMaxima = 100
+
+	method cantidadDePAsajeros() {
+		return 0
+	}
+
+	method pesoMaximo() {
+		return self.cargaMaxima() + 160
+	}
+
+	method cantidadDeBanios() = return 0
+
+}
+
