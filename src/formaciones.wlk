@@ -62,7 +62,10 @@ class Formacion {
 	}
 
 	method pesoMaximoLocomotora() {
-		return locomotoras.sum{ locomotora => locomotora.pesoMaximo() }
+		return locomotoras.sum{ locomotora => locomotora.pesoDeLocomotora() }
+	}
+	method vagonMasPesadosDeUnaFormacion(){
+		return vagones.max{unVagon => unVagon.pesoMaximo()}
 	}
 
 	method pesoTotalDeFormacionConVagonesYLocomotoras() {

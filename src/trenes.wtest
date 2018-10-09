@@ -88,14 +88,31 @@ describe "test de trenes" {
 
 	test"La formacion necesita un conductor experimentado" {
 		depositoUno.agregarFormacion(formacionUno)
-		formacionUno.agregarVagon(vagonUno)
-		formacionUno.agregarVagon(vagonDos)
+		formacionUno.agregarVagones(vagonUno)
+		formacionUno.agregarVagones(vagonDos)
 		formacionUno.agregarLocomotoras(locomotoraUno)
 		formacionUno.agregarLocomotoras(locomotoraDos)
-		vagonUno.ancho(3)
-		vagonDos.largo(9)
-		vagonDos.cargaMaxima(3200)
-		assert.that(depositoUno.necesitoConductorExperimentado())
+		vagonDos.anchoUtil(3)
+		vagonDos.largoUtil(9)
+		vagonUno.cargaMaxima(3200)
+		assert.that(depositoUno.necesitaConductorExperimentado())
+	}
+	
+	test " la locomotora Dos puede agregarse a la formacion de un deposito"{
+			
+			depositoUno.agregarFormacion(formacionDos)
+			formacionUno.agregarLocomotoras(locomotoraUno)
+			locomotoraUno.pesoMaximoDeArrastre(1000)
+			formacionUno.agregarVagones(vagonTres)
+			vagonTres.anchoUtil(3)
+			vagonTres.largoUtil(2)
+			depositoUno.agregarLocomotoraAFormacionDeterminada(formacionDos)
+			assert.that(formacionUno.puedeMoverse())
+			
+		
+		
+		
+		
 	}
 
 	test "testX" {

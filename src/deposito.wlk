@@ -12,11 +12,11 @@ class Deposito {
 	}
 
 	method vagonMasPesado() {
-		return formaciones.map{ unVagon => unVagon.vagonMasPesadoDeUnaFormacion() }
+		return formaciones.map{ unVagon => unVagon.vagonMasPesadosDeUnaFormacion() }
 	}
 
 	method necesitaConductorExperimentado() {
-		return formaciones.any{ formacion => formacion.esCompleta() }
+		return formaciones.any{ formacion => formacion.esCompleja() }
 	}
 
 	method agregarLocomotoraAFormacionDeterminada(formacion) {
