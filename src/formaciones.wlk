@@ -76,7 +76,7 @@ class Formacion {
 
 }
 
-class FormacionesCortaDistancia inherits Formacion {
+class FormacionCortaDistancia inherits Formacion {
 
 	method estaBienArmada() {
 		return self.puedeMoverse() and not self.esCompleja()
@@ -123,5 +123,19 @@ class Ciudad {
 
 }
 
+class FormacionesDeAltaVelocidad inherits Formacion {
+	
+	var property velocidadMaximaDelTren = 400
 
+	method estaBienArmada() {
+		return self.velocidadMaxima() > 250 and vagones.all{ vagones => vagones.pesoMaximo() < 2500 }
+	}
+
+	method velocidadMaximaDelTren() {
+		return 400
+	}
+	
+	// hice el metodo y la property por que me genera un poc de duda.. 
+
+}
 

@@ -6,42 +6,45 @@ import locomotoras.*
 describe "test de trenes" {
 
 	var depositoUno = new Deposito()
-	var formacionUno = new Formacion()
-	var formacionDos = new Formacion()
+	var formacionUno = new FormacionCortaDistancia()
+	var formacionDos = new FormacionLargaDistancia()
 	var locomotoraUno = new Locomotora()
 	var locomotoraDos = new Locomotora()
-	var vagonUno = new Vagon(tipoDeVagon = carga)
-	var vagonDos = new Vagon(tipoDeVagon = pasajero)
-	var vagonTres = new Vagon(tipoDeVagon = pasajero)
+	var vagonUno = new VagonDeCarga()
+	var vagonDos = new VagonDePasajero()
+	var vagonTres = new VagonDePasajero()
+	var vagonCuatro = new VagonDePasajero()
 
-	test"La cantidad de vagones livianos es 3" {
-		formacionUno.agregarVagon(vagonUno)
-		formacionUno.agregarVagon(vagonDos)
-		formacionUno.agregarVagon(vagonTres)
-		vagonUno.tipoDeVagon(carga)
-		vagonDos.tipoDeVagon(carga)
-		carga.cargaMaxima(1000)
-		pasajero.ancho(2)
-		pasajero.largo(3)
-		assert.equals(3, formacionUno.cantidadVagonesLivianos())
+	test"La cantidad de vagones livianos de una formacion es 3" {
+		formacionUno.agregarVagones(vagonUno)
+		formacionUno.agregarVagones(vagonDos)
+		formacionUno.agregarVagones(vagonTres)
+		formacionUno.agregarVagones(vagonCuatro)
+		vagonUno.cargaMaxima(1000)
+		vagonDos.anchoUtil(2)
+		vagonDos.largoUtil(3)
+		vagonCuatro.largoUtil(3)
+		vagonCuatro.anchoUtil(3)
+		assert.equals(3, formacionUno.cantidadDeVagonesLivianos())
 	}
 
 	test "Velocidad maxima de una formacion" {
-		formacionUno.agregarLocomotora(locomotoraUno)
+		formacionDos.agregarLocomotoras(locomotoraUno)
 		locomotoraUno.velocidadMaxima(15)
-		assert.equals(15, formacionUno.velocidadMaxima())
+		assert.equals(15, formacionDos.velocidadMaximaDeLocomotoras())
 	}
+	
 
 	test "una formacion es eficiente" {
-		formacionUno.agregarLocomotora(locomotoraUno)
-		locomotoraUno.peso(100)
-		locomotoraUno.capacidadMaximaDeArrastre(1000)
-		assert.that(formacionUno.esEficiente())
+		formacionDos.agregarLocomotoras(locomotoraUno)
+		locomotoraUno.pesoDeLocomotora(100)
+		locomotoraUno.pesoMaximoDeArrastre(1000)
+		assert.that(formacionDos.esEficiente())
 	}
 
 	test "una formacion puede moverse" {
-		formacionDos.agregarLocomotora(locomotoraUno)
-		formacionDos.agregarLocomotora(locomotoraDos)
+		formacionDos.agregarLocomotoras(locomotoraUno)
+		formacionDos.agregarLocomotoras(locomotoraDos)
 		carga.cargaMaxima(100)
 		locomotoraUno.capacidadMaximaDeArrastre(1000)
 		carga.cargaMaxima(200)
@@ -50,8 +53,8 @@ describe "test de trenes" {
 	}
 
 	test "Le faltan 880 kg de arrastre" {
-		formacionDos.agregarLocomotora(locomotoraUno)
-		formacionDos.agregarLocomotora(locomotoraDos)
+		formacionDos.agregarLocomotoras(locomotoraUno)
+		formacionDos.agregarLocomotoras(locomotoraDos)
 		formacionDos.agregarVagon(vagonUno)
 		formacionDos.agregarVagon(vagonDos)
 		carga.cargaMaxima(200)
@@ -79,8 +82,8 @@ describe "test de trenes" {
 		depositoUno.agregarFormacion(formacionUno)
 		formacionUno.agregarVagon(vagonUno)
 		formacionUno.agregarVagon(vagonDos)
-		formacionUno.agregarLocomotora(locomotoraUno)
-		formacionUno.agregarLocomotora(locomotoraDos)
+		formacionUno.agregarLocomotoras(locomotoraUno)
+		formacionUno.agregarLocomotoras(locomotoraDos)
 		pasajero.ancho(3)
 		pasajero.largo(9)
 		carga.cargaMaxima(3200)

@@ -1,7 +1,11 @@
+import formaciones.*
+import deposito.*
+import locomotoras.*
+import vagones.*
 class VagonDePasajero {
 
-	var property largoUtil
-	var property anchoUtil
+	var property largoUtil = 5
+	var property anchoUtil = 0
 
 	method cantidadDePasajeros() {
 		if (anchoUtil <= 2.5) {
