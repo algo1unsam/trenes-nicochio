@@ -28,7 +28,9 @@ class Formacion {
 	 * 		return locomotoras.min({ locomotora => locomotora.velocidadMaxima() }).velocidadMaxima()
 	 }*/
 	method esEficiente() {
-		return locomotoras.all({ locomotora => locomotora.arrastreUtil() >= locomotora.peso() * 5 })
+		return locomotoras.all({ locomotora => locomotora.arrastreUtil() >= locomotora.pesoDeLocomotora() * 5 })
+	// duda si va any o all , any me trae ALGUNA que cumpla la condision y all me trae TODAS las que la cumplan
+	//
 	}
 
 	method puedeMoverse() {
@@ -124,7 +126,7 @@ class Ciudad {
 }
 
 class FormacionesDeAltaVelocidad inherits Formacion {
-	
+
 	var property velocidadMaximaDelTren = 400
 
 	method estaBienArmada() {
@@ -134,8 +136,7 @@ class FormacionesDeAltaVelocidad inherits Formacion {
 	method velocidadMaximaDelTren() {
 		return 400
 	}
-	
-	// hice el metodo y la property por que me genera un poc de duda.. 
 
+// hice el metodo y la property por que me genera un poco de duda
 }
 

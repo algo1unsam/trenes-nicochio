@@ -29,53 +29,61 @@ describe "test de trenes" {
 	}
 
 	test "Velocidad maxima de una formacion" {
-		formacionDos.agregarLocomotoras(locomotoraUno)
+	 	formacionDos.agregarLocomotoras(locomotoraUno)
 		locomotoraUno.velocidadMaxima(15)
 		assert.equals(15, formacionDos.velocidadMaximaDeLocomotoras())
+		
+		
+		
+		
 	}
-	
 
 	test "una formacion es eficiente" {
-		formacionDos.agregarLocomotoras(locomotoraUno)
-		locomotoraUno.pesoDeLocomotora(100)
-		locomotoraUno.pesoMaximoDeArrastre(1000)
-		assert.that(formacionDos.esEficiente())
-	}
+
+		formacionUno.agregarLocomotoras(locomotoraUno)
+		locomotoraUno.pesoDeLocomotora(10)
+		locomotoraUno.pesoMaximoDeArrastre(100)
+		assert.that(formacionUno.esEficiente())
+	} //preguntar.. 
+	
+	
 
 	test "una formacion puede moverse" {
-		formacionDos.agregarLocomotoras(locomotoraUno)
+		
+		formacionUno.agregarLocomotoras(locomotoraUno)
 		formacionDos.agregarLocomotoras(locomotoraDos)
-		carga.cargaMaxima(100)
-		locomotoraUno.capacidadMaximaDeArrastre(1000)
-		carga.cargaMaxima(200)
-		locomotoraDos.capacidadMaximaDeArrastre(1000)
-		assert.that(formacionDos.puedeMoverse())
+		vagonUno.cargaMaxima(100)
+		locomotoraUno.pesoMaximoDeArrastre(1000)
+		vagonUno.cargaMaxima(200)
+		locomotoraDos.pesoMaximoDeArrastre(1000)
+		assert.that(formacionUno.puedeMoverse())
 	}
 
-	test "Le faltan 880 kg de arrastre" {
-		formacionDos.agregarLocomotoras(locomotoraUno)
-		formacionDos.agregarLocomotoras(locomotoraDos)
-		formacionDos.agregarVagon(vagonUno)
-		formacionDos.agregarVagon(vagonDos)
-		carga.cargaMaxima(200)
-		pasajero.ancho(2)
-		pasajero.largo(3)
-		locomotoraUno.capacidadMaximaDeArrastre(800)
-		locomotoraDos.capacidadMaximaDeArrastre(800)
-		assert.equals(880, formacionDos.cuantosKilosDeArrastreLeFalta())
+	test "Le faltan 680 kg de arrastre" {
+		formacionUno.agregarLocomotoras(locomotoraUno)
+		formacionUno.agregarLocomotoras(locomotoraDos)
+		formacionUno.agregarVagones(vagonUno)
+		formacionUno.agregarVagones(vagonDos)
+		vagonUno.cargaMaxima(200)
+		vagonDos.anchoUtil(2)
+		vagonDos.largoUtil(3)
+		locomotoraUno.pesoMaximoDeArrastre(800)
+		locomotoraDos.pesoMaximoDeArrastre(800)
+		assert.equals(680, formacionUno.kilosDeEmpujeQueFaltanParaMoverse())
 	}
 
 	test "El vagon mas pesado de la formacion es" {
-		carga.cargaMaxima(180)
-		pasajero.ancho(2)
-		pasajero.largo(5)
+		
 		depositoUno.agregarFormacion(formacionUno)
 		depositoUno.agregarFormacion(formacionDos)
-		formacionUno.agregarVagon(vagonUno)
-		formacionUno.agregarVagon(vagonDos)
-		formacionDos.agregarVagon(vagonTres)
-		formacionDos.agregarVagon(vagonDos)
-		assert.equals([ vagonDos, vagonTres ], depositoUno.conjuntoDeVagonesPesados())
+		formacionUno.agregarVagones(vagonUno)
+		formacionUno.agregarVagones(vagonDos)
+		formacionDos.agregarVagones(vagonTres)
+		formacionDos.agregarVagones(vagonDos)
+		vagonUno.cargaMaxima(180)
+		vagonDos.anchoUtil(2)
+		vagonDos.largoUtil(5)
+		assert.equals([ vagonDos, vagonTres ], depositoUno.vagonMasPesado())
 	}
 
 	test"La formacion necesita un conductor experimentado" {
@@ -84,9 +92,9 @@ describe "test de trenes" {
 		formacionUno.agregarVagon(vagonDos)
 		formacionUno.agregarLocomotoras(locomotoraUno)
 		formacionUno.agregarLocomotoras(locomotoraDos)
-		pasajero.ancho(3)
-		pasajero.largo(9)
-		carga.cargaMaxima(3200)
+		vagonUno.ancho(3)
+		vagonDos.largo(9)
+		vagonDos.cargaMaxima(3200)
 		assert.that(depositoUno.necesitoConductorExperimentado())
 	}
 

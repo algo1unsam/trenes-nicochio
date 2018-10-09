@@ -7,12 +7,12 @@ class Deposito {
 	var property formaciones = []
 	var property locomotorasSueltas = []
 
-	method agregarVagones(unVagon) {
+	method agregarFormacion(unVagon) {
 		formaciones.add(unVagon)
 	}
 
 	method vagonMasPesado() {
-		return formaciones.map{ formacion => formacion.pesoMaximo() }
+		return formaciones.map{ unVagon => unVagon.vagonMasPesadoDeUnaFormacion() }
 	}
 
 	method necesitaConductorExperimentado() {
