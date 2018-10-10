@@ -29,7 +29,7 @@ class VagonDeCarga {
 
 	var property cargaMaxima = 100
 
-	method cantidadDePAsajeros() {
+	method cantidadDePasajeros() {
 		return 0
 	}
 

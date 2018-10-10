@@ -18,15 +18,18 @@ class Deposito {
 	method necesitaConductorExperimentado() {
 		return formaciones.any{ formacion => formacion.esCompleja() }
 	}
+	method agregarLocomotoraSuelta(locomotora){
+		locomotorasSueltas.add(locomotora)
+	}
 
 	method agregarLocomotoraAFormacionDeterminada(formacion) {
 		if (!formacion.puedeMoverse()) {
-			formacion.add(self.buscarLocomotoraSueltaApta(formacion))
+			formacion.locomotoras().add(self.buscarLocomotoraSueltaApta(formacion))
 		}
 	}
 
 	method buscarLocomotoraSueltaApta(formacion) {
-		return locomotorasSueltas.find{ locomotora => locomotora.arrastreUtil() >= formacion.empuje() }
+		return locomotorasSueltas.find{ locomotora => locomotora.arrastreUtil() >= formacion.kilosDeEmpujeQueFaltanParaMoverse() }
 	}
 
 }

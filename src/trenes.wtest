@@ -12,9 +12,11 @@ describe "test de trenes" {
 	var locomotoraDos = new Locomotora()
 	var vagonUno = new VagonDeCarga()
 	var vagonDos = new VagonDePasajero()
-	var vagonTres = new VagonDePasajero()
+	var vagonTres = new VagonDePasajero() // pueedo agregarle el ancho y el largo util para cada vagon.
 	var vagonCuatro = new VagonDePasajero()
+	var locomotoraExtra = new Locomotora()
 
+	// puedo hacer un fixture para ejecute primero lo que necesito. 
 	test"La cantidad de vagones livianos de una formacion es 3" {
 		formacionUno.agregarVagones(vagonUno)
 		formacionUno.agregarVagones(vagonDos)
@@ -29,27 +31,19 @@ describe "test de trenes" {
 	}
 
 	test "Velocidad maxima de una formacion" {
-	 	formacionDos.agregarLocomotoras(locomotoraUno)
+		formacionDos.agregarLocomotoras(locomotoraUno)
 		locomotoraUno.velocidadMaxima(15)
 		assert.equals(15, formacionDos.velocidadMaximaDeLocomotoras())
-		
-		
-		
-		
 	}
 
 	test "una formacion es eficiente" {
-
 		formacionUno.agregarLocomotoras(locomotoraUno)
 		locomotoraUno.pesoDeLocomotora(10)
 		locomotoraUno.pesoMaximoDeArrastre(100)
 		assert.that(formacionUno.esEficiente())
-	} //preguntar.. 
-	
-	
+	} // preguntar.. 
 
 	test "una formacion puede moverse" {
-		
 		formacionUno.agregarLocomotoras(locomotoraUno)
 		formacionDos.agregarLocomotoras(locomotoraDos)
 		vagonUno.cargaMaxima(100)
@@ -59,7 +53,7 @@ describe "test de trenes" {
 		assert.that(formacionUno.puedeMoverse())
 	}
 
-	test "Le faltan 680 kg de arrastre" {
+	test "Le faltan 880 kg de arrastre" {
 		formacionUno.agregarLocomotoras(locomotoraUno)
 		formacionUno.agregarLocomotoras(locomotoraDos)
 		formacionUno.agregarVagones(vagonUno)
@@ -69,11 +63,10 @@ describe "test de trenes" {
 		vagonDos.largoUtil(3)
 		locomotoraUno.pesoMaximoDeArrastre(800)
 		locomotoraDos.pesoMaximoDeArrastre(800)
-		assert.equals(680, formacionUno.kilosDeEmpujeQueFaltanParaMoverse())
+		assert.equals(880, formacionUno.kilosDeEmpujeQueFaltanParaMoverse())
 	}
 
 	test "El vagon mas pesado de la formacion es" {
-		
 		depositoUno.agregarFormacion(formacionUno)
 		depositoUno.agregarFormacion(formacionDos)
 		formacionUno.agregarVagones(vagonUno)
@@ -97,30 +90,73 @@ describe "test de trenes" {
 		vagonUno.cargaMaxima(3200)
 		assert.that(depositoUno.necesitaConductorExperimentado())
 	}
-	
-	test " la locomotora Dos puede agregarse a la formacion de un deposito"{
-			
-			depositoUno.agregarFormacion(formacionDos)
-			formacionUno.agregarLocomotoras(locomotoraUno)
-			locomotoraUno.pesoMaximoDeArrastre(1000)
-			formacionUno.agregarVagones(vagonTres)
-			vagonTres.anchoUtil(3)
-			vagonTres.largoUtil(2)
-			depositoUno.agregarLocomotoraAFormacionDeterminada(formacionDos)
-			assert.that(formacionUno.puedeMoverse())
-			
-		
-		
-		
-		
+
+	test " la locomotora Dos puede agregarse a la formacion de un deposito" {
+		depositoUno.agregarLocomotoraSuelta(locomotoraExtra)
+		locomotoraExtra.pesoMaximoDeArrastre(2500)
+		formacionDos.agregarLocomotoras(locomotoraUno)
+		vagonUno.cargaMaxima(800)
+		locomotoraUno.pesoMaximoDeArrastre(500)
+		formacionDos.agregarVagones(vagonUno)
+		depositoUno.agregarLocomotoraAFormacionDeterminada(formacionDos)
+		assert.equals(2800, formacionDos.arrastreUtilTotalDeLocomotoras())
 	}
 
-	test "testX" {
+	test " la formacion Uno esta bien armada" {
+		depositoUno.agregarFormacion(formacionUno)
+		formacionUno.agregarLocomotoras(locomotoraDos)
+		formacionUno.agregarLocomotoras(locomotoraUno)
+		locomotoraUno.pesoMaximoDeArrastre(3500)
+		locomotoraDos.pesoMaximoDeArrastre(5000)
+		formacionUno.agregarVagones(vagonUno)
+		formacionUno.agregarVagones(vagonUno)
+		vagonUno.cargaMaxima(6000)
+		vagonUno.cargaMaxima(2000)
+		assert.that(formacionUno.estaBienArmada())
+	}
+
+	test "La formacion Dos esta bien armada" {
+		var belgrano = new FormacionLargaDistancia()
+		vagonTres.anchoUtil(5)
+		vagonTres.largoUtil(5)
+		vagonDos.anchoUtil(8)
+		vagonDos.largoUtil(8)
+		belgrano.agregarLocomotoras(locomotoraUno)
+		belgrano.agregarVagones(vagonUno)
+		belgrano.agregarVagones(vagonUno)
+		locomotoraUno.pesoMaximoDeArrastre(15000)
+		assert.that(belgrano.estaBienArmada())
+	}
+
+	test "velocidad maxima en corta Distancia" {
+		locomotoraUno.pesoDeLocomotora(100)
+		locomotoraUno.pesoMaximoDeArrastre(2000)
+		locomotoraUno.velocidadMaxima(70)
+		locomotoraDos.pesoDeLocomotora(150)
+		locomotoraDos.pesoMaximoDeArrastre(2000)
+		locomotoraDos.velocidadMaxima(40)
+		formacionUno.agregarLocomotoras(locomotoraUno)
+		formacionUno.agregarLocomotoras(locomotoraDos)
+		assert.equals(40, formacionUno.velocidadMaxima())
+	}
+
+	test "velocidad Maxima de larga distancia" {
 		var buenosAires = new Ciudad(esGrande = true)
-		var chacabuco = new Ciudad()
+		var chacabuco = new Ciudad(esGrande = true)
 		var tandil = new Ciudad(esGrande = false)
 		var tren = new FormacionLargaDistancia(locomotoras = [], vagones = [], origen = buenosAires, destino = chacabuco)
-		tren.velocidadMaxima()
+		vagonTres.anchoUtil(5)
+		vagonTres.largoUtil(5)
+		vagonDos.anchoUtil(8)
+		vagonDos.largoUtil(8)
+		tren.agregarLocomotoras(locomotoraUno)
+		tren.agregarVagones(vagonTres)
+		tren.agregarVagones(vagonDos)
+		locomotoraUno.pesoMaximoDeArrastre(18000)
+		locomotoraUno.velocidadMaxima(250)
+		tren.origen(buenosAires)
+		tren.destino(chacabuco)
+		assert.equals(200, tren.velocidadMaxima())
 	}
 
 }
