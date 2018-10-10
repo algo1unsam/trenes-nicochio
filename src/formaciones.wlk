@@ -124,8 +124,6 @@ class FormacionLargaDistancia inherits Formacion {
 	override method velocidadMaximaLegal() {
 		return if (origen.esGrande() and destino.esGrande()) 200 else 150
 	}
-	
-	
 
 }
 
@@ -135,12 +133,12 @@ class Ciudad {
 
 }
 
-class FormacionesDeAltaVelocidad inherits Formacion {
+class FormacionesDeAltaVelocidad inherits FormacionLargaDistancia {
 
 	var property velocidadMaximaDelTren = 400
 
-	method estaBienArmada() {
-		return self.velocidadMaxima() > 250 and vagones.all{ vagones => vagones.pesoMaximo() < 2500 }
+	override method estaBienArmada() {
+		return super() and self.velocidadMaxima() > 250 and vagones.all{ vagones => vagones.pesoMaximo() < 2500 }
 	}
 
 	method velocidadMaximaDelTren() {

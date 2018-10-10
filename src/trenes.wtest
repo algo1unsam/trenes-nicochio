@@ -15,7 +15,11 @@ describe "test de trenes" {
 	var vagonTres = new VagonDePasajero() // pueedo agregarle el ancho y el largo util para cada vagon.
 	var vagonCuatro = new VagonDePasajero()
 	var locomotoraExtra = new Locomotora()
-
+	var buenosAires = new Ciudad(esGrande = true)
+	var chacabuco = new Ciudad(esGrande = true)
+	var tandil = new Ciudad(esGrande = false)
+	var tren = new FormacionLargaDistancia(locomotoras = [], vagones = [], origen = buenosAires, destino = chacabuco)
+	
 	// puedo hacer un fixture para ejecute primero lo que necesito. 
 	test"La cantidad de vagones livianos de una formacion es 3" {
 		formacionUno.agregarVagones(vagonUno)
@@ -141,10 +145,6 @@ describe "test de trenes" {
 	}
 
 	test "velocidad Maxima de larga distancia" {
-		var buenosAires = new Ciudad(esGrande = true)
-		var chacabuco = new Ciudad(esGrande = true)
-		var tandil = new Ciudad(esGrande = false)
-		var tren = new FormacionLargaDistancia(locomotoras = [], vagones = [], origen = buenosAires, destino = chacabuco)
 		vagonTres.anchoUtil(5)
 		vagonTres.largoUtil(5)
 		vagonDos.anchoUtil(8)
@@ -159,5 +159,22 @@ describe "test de trenes" {
 		assert.equals(200, tren.velocidadMaxima())
 	}
 
+	test "tren de alta velocidad esta bien armado" {
+		var ferrari = new FormacionesDeAltaVelocidad()
+		vagonTres.anchoUtil(3)
+		vagonTres.largoUtil(3)
+		vagonDos.anchoUtil(2)
+		vagonDos.largoUtil(2)
+		ferrari.agregarLocomotoras(locomotoraUno)
+		ferrari.agregarLocomotoras(locomotoraDos)
+		ferrari.agregarVagones(vagonTres)
+		ferrari.agregarVagones(vagonDos)
+		locomotoraUno.pesoMaximoDeArrastre(15000)
+		locomotoraUno.velocidadMaxima(300)
+		locomotoraDos.velocidadMaxima(280)
+		ferrari.origen(buenosAires)
+		ferrari.destino(chacabuco)
+		assert.notThat(ferrari.estaBienArmada())
+	}
 }
 
